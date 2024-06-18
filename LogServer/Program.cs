@@ -1,3 +1,9 @@
+using LColorin;
+Logger logger = new Logger();
+
+
+
+
 var builder = WebApplication.CreateSlimBuilder(args);
 
 builder.Services.ConfigureHttpJsonOptions(options =>
@@ -6,11 +12,18 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 });
 
 var app = builder.Build();
-
-app.MapGet("/", () =>
+app.MapGet("/", (HttpContext context) =>
 {
-    return "init";
+    //logger.Clear();
+    logger.Log(context.TraceIdentifier, Marker.Error);
+
+
+    return logger.GetAll;
+
+
+
 });
+
 
 app.Run();
 
